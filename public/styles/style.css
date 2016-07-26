@@ -63,3 +63,18 @@ th, td {
     padding: 5px;
     text-align: left;
 }
+
+/* chatroom configuration */
+.chatroom {
+    width: 70%;
+    height: 100%;
+    float: left;
+}
+
+.chatroom-content {
+    height: 70%;
+}
+
+.chatroom-util {
+    height: 30%;
+}
