@@ -1,0 +1,104 @@
+<DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>狼人杀</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <form action="" id="login-form">
+            姓名：<input type="dotted" id="username"><br>
+            <input type="radio" id="create_room_btn" value="y" name="login">创建新房间<br>
+            <input type="radio" id="enter_room_btn" value="n" name="login">进入房间<input type="number" id="room_number"><br>
+            <input type="button" id="login-submit-btn" value="确认">
+        </form>
+
+        <div class="info-container" style="display: none" id="chatty">
+            <table id="chatty-content">
+                <tr>
+                    <th>来自</th>
+                    <th>内容</th>
+                </tr>
+            </table>
+            <form action="" id="chatty-form">
+                <input type="text" id="chatty-input">
+                <input type="button" id="chatty-submit" value="发送">
+            </form>
+        </div>
+
+        <div id="chatroom" style="display: none" class="chatroom">
+            <table id="chatroom-content">
+                <p id="chatroom-title"></p>
+                <tr>
+                    <th>来自</th>
+                    <th>内容</th>
+                </tr>
+            </table>
+        </div>
+
+        <script>
+            var socket = io();
+            // on start up
+
+            // helper functions
+            function prepare_user(){
+                console.log('p user');
+                var username = $('#username').val();
+                var createp = $('input:checked').val() == 'y';
+
+                if (createp) {
+                    socket.emit('room create', username)
+                } else {
+                    socket.emit('room enter', username, parseInt($('#room_number').val()));
+                }
+            };
+
+            function get_user_number(room_info){
+                return room_info.current_users.length;
+            }
+
+            function message2html(from_who, content) {
+                return '<tr><td>' + from_who + '</td>' + '<td>' + content + '</tr>';
+            }
+
+            // login, prepare user
+            $('#login-form').submit(prepare_user);
+            $('#login-submit-btn').click(prepare_user);
+
+            // first time create chatroom
+            socket.on('chatroom show', function(room_number, room_info){
+                $('#login-form').attr('style', 'display: none');
+                $('#chatroom').attr('style', 'display: inline');
+                $('#chatty').attr('style', 'display: inline');
+                $('#chatroom-title').html('房间号：' + room_number.toString() + ' (' + get_user_number(room_info) + '人)');
+            });
+
+            // user enter room
+            socket.on('room exists', function(name, room_number, exists){
+                if (exists) {
+                    socket.emit('chatroom userin', name, room_number);
+                } else {
+                    alert('请输入正确房间号');
+                };
+            });
+
+            // recieve new message
+            socket.on('chatroom chat', function(from_who, content, room_number, room_info){
+                $('#chatroom-title').html('房间号：' + room_number.toString() + ' (' + get_user_number(room_info) + '人)');
+                $('#chatroom-content').append(message2html(from_who, content));
+            });
+
+            // send chatty message
+            $('#chatty-submit').click(function(){
+                socket.emit('chatty send', $('#chatty-input').val());
+            });
+            
+            socket.on('chatty new', function(from_who, content){
+                console.log('recieve', from_who, content);
+                $('#chatty-content').append(message2html(from_who, content));
+            })
+        </script>
+    </body>
+</html>

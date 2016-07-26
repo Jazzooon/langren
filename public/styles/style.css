@@ -1,0 +1,65 @@
+body {
+    height: 100%;
+    width: 100%;
+}
+
+form {
+    width: 70%;
+    height: 100%;
+
+    float: left;
+}
+
+input[type=dotted], input[type=number], button {
+    font-family: inherit;
+    font-size: 100%;
+    margin: 0;
+    width: 25%;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; 
+}
+
+input[type=number], input[type=dotted] {
+    border: 1px dotted #999;
+    border-radius: 0;
+
+    -webkit-appearance: none;
+}
+
+.info-container {
+    width: 30%;
+    float: right;
+}
+
+#chatty-form {
+    width: 100%;
+    height: 10%;
+}
+
+#chatty-content {
+    width: 100%;
+    height: 90%;
+}
+
+#chatty-input {
+    width: 80%;
+    float: left;
+}
+
+#chatty-submit {
+    width:20%;
+    float: right;
+}
+
+/* table with frame */
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
+}
