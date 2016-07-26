@@ -10,6 +10,7 @@ app.get('/', function(req, res){
 
 http.listen(process.env.PORT || 3000, function(){ console.log('listening on', http.address().port);
 });
+
 app.use(express.static(__dirname + '/public/images'));
 app.use(express.static(__dirname + '/public/styles'));
 app.use(express.static(__dirname + '/public/scripts'));
