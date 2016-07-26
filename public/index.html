@@ -96,9 +96,11 @@
             // send chatty message
             $('#chatty-submit').click(function(){
                 socket.emit('chatty send', $('#chatty-input').val());
+                $('#chatty-input').val('');
             });
             $('#chatty-form').submit(function(){
                 socket.emit('chatty send', $('#chatty-input').val());
+                $('#chatty-input').val();
             });
             
             socket.on('chatty new', function(from_who, content){
