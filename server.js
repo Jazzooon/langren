@@ -8,7 +8,7 @@ app.get('/', function(req, res){
 	res.sendFile(__dirname + '/public/index.html');
 });
 
-http.listen(3000);
+// http.listen(3000);
 app.use(express.static(__dirname + '/public/images'));
 app.use(express.static(__dirname + '/public/styles'));
 app.use(express.static(__dirname + '/public/scripts'));
