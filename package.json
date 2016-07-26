@@ -6,8 +6,7 @@
     "main": "server.js",
     "dependencies": {
         "express": "latest",
-        "socket.io": "latest",
-        "jquery": "latest"
+        "socket.io": "latest"
     },
     "repository": {
         "url": "https://github.com/Jazzooon/langren.git"  
