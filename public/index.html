@@ -97,6 +97,9 @@
             $('#chatty-submit').click(function(){
                 socket.emit('chatty send', $('#chatty-input').val());
             });
+            $('#chatty-form').submit(function(){
+                socket.emit('chatty send', $('#chatty-input').val());
+            });
             
             socket.on('chatty new', function(from_who, content){
                 console.log('recieve', from_who, content);
