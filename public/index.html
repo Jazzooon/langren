@@ -51,10 +51,15 @@
                 var username = $('#username').val();
                 var createp = $('input:checked').val() == 'y';
 
-                if (createp) {
-                    socket.emit('room create', username)
-                } else {
-                    socket.emit('room enter', username, parseInt($('#room_number').val()));
+                if (username == '') {
+                    alert('输入名字');
+                }
+                else {
+                    if (createp) {
+                        socket.emit('room create', username)
+                    } else {
+                        socket.emit('room enter', username, parseInt($('#room_number').val()));
+                    }
                 }
             };
 
